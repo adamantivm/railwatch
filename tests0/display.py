@@ -1,10 +1,12 @@
 import cv, time
 
 win = "win-0"
-im1 = cv.LoadImageM("seq-1.jpg")
-im2 = cv.LoadImageM("seq-2.jpg")
-diff = cv.CreateMat( im1.rows, im1.cols, im1.type)
-cv.AbsDiff( im1, im2, diff)
 cv.NamedWindow( win)
-cv.ShowImage( win, diff)
-cv.WaitKey( 0)
+im_prev = cv.LoadImageM("seq-1.jpg")
+im_diff = cv.CreateMat( im_prev.rows, im_prev.cols, im_prev.type)
+for i in range(2,300):
+    im_cur = cv.LoadImageM("seq-%d.jpg" % i)
+    cv.AbsDiff( im_prev, im_cur, im_diff)
+    cv.ShowImage( win, im_diff)
+    cv.WaitKey( 200)
+    im_prev = im_cur
